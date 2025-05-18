@@ -58,9 +58,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    os.makedirs(os.path.join(args.location, "colmap", "sparse"), exist_ok=True)
-    os.makedirs(os.path.join(args.location, "colmap", "images"), exist_ok=True)
+    os.makedirs(os.path.join(args.save_location, "colmap", "sparse"), exist_ok=True)
+    os.makedirs(os.path.join(args.save_location, "colmap", "images"), exist_ok=True)
 
-    views_data(args.data, args.location, args.start, args.end)
-    ply_data(args.pointcloud, args.location, args.start, args.end)
-    copy_images(args.data, args.location, args.start, args.end)
+    views_data(args.dataset, args.save_location, args.start, args.end)
+    ply_data(args.pointcloud, args.save_location, args.start, args.end)
+    copy_images(args.dataset, args.save_location, args.start, args.end)
