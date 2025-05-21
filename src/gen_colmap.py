@@ -31,10 +31,16 @@ def ply_data(plyfile, target, start=None, end=None):
     p3d_path = os.path.join(target, "colmap", "sparse", "points3D.txt")
     vertices = PlyData.read(plyfile)['vertex'].data [start:end]
     with open(p3d_path, 'w') as p3d_file:
-        for i,(x,y,z) in enumerate(vertices, start=1):
-            p3d_line = f"{i} {x} {y} {z} 255 255 255 0.0"
-            p3d_file.write(p3d_line + "\n")
-
+        # no rgb
+        if (len(vertices[0]) == 3):
+            for i,(x,y,z) in enumerate(vertices, start=1):
+                p3d_line = f"{i} {x} {y} {z} 255 255 255 0.0"
+                p3d_file.write(p3d_line + "\n")
+        # rgb
+        elif (len(vertices[0]) == 6):
+            for i,(x,y,z,r,g,b) in enumerate(vertices, start=1):
+                p3d_line = f"{i} {x} {y} {z} {r} {g} {b} 0.0"
+                p3d_file.write(p3d_line + "\n")
 
 def copy_images(dataset, target, start=None, end=None):
     images = sorted(os.listdir(os.path.join(dataset, "images")))
