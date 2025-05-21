@@ -44,13 +44,20 @@ def ply_data(plyfile, target, start=None, end=None):
 
 def copy_images(dataset, target, start=None, end=None):
     images = sorted(os.listdir(os.path.join(dataset, "images")))
-    copy_loc = os.path.join(target, "colmap", "images")
-    if os.listdir(copy_loc):
-        os.system(f"rm {copy_loc}/*")
+    depths = sorted(os.listdir(os.path.join(dataset, "depth")))
+    img_loc = os.path.join(target, "colmap", "images")
+    dpt_loc = os.path.join(target, "colmap", "depth")
 
-    for img in images[start:end]:
-        img_path = os.path.join(dataset, "images", img)
-        os.system(f"cp {img_path} {copy_loc}")
+    if os.listdir(img_loc):
+        os.system(f"rm {img_loc}/*")
+    if os.listdir(dpt_loc):
+        os.system(f"rm {img_loc}/*")
+
+    for i in range(start, end):
+        img_path = os.path.join(dataset, "images", images[i])
+        dpt_path = os.path.join(dataset, "depth", depths[i])
+        os.system(f"cp {img_path} {img_loc}")
+        os.system(f"cp {dpt_path} {dpt_loc}")
         
 
 if __name__ == "__main__":
@@ -66,6 +73,7 @@ if __name__ == "__main__":
 
     os.makedirs(os.path.join(args.save_location, "colmap", "sparse"), exist_ok=True)
     os.makedirs(os.path.join(args.save_location, "colmap", "images"), exist_ok=True)
+    os.makedirs(os.path.join(args.save_location, "colmap", "depth"), exist_ok=True)
 
     views_data(args.dataset, args.save_location, args.start, args.end)
     ply_data(args.pointcloud, args.save_location, args.start, args.end)
