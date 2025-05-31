@@ -1,0 +1,1 @@
+clone from [official repository](https://github.com/facebookresearch/sam2)
