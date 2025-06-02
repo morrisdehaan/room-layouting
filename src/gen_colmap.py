@@ -10,8 +10,8 @@ from scipy.spatial.transform import Rotation as R
 def views_data(dataset, target, start=None, end=None):
     views = open(os.path.join(dataset, "views.json")).readlines()[start:end]
 
-    cameras_path = os.path.join(target, "sparse", "cameras.txt")
-    images_path = os.path.join(target, "sparse", "images.txt")
+    cameras_path = os.path.join(target, "sparse", "0", "cameras.txt")
+    images_path = os.path.join(target, "sparse", "0", "images.txt")
 
     with open(cameras_path, 'w') as cam_txt, open(images_path, 'w') as img_txt:
         for i, view in enumerate(views, start=1):
@@ -31,7 +31,7 @@ def views_data(dataset, target, start=None, end=None):
     return
 
 def ply_data(plyfile, target, reorder_dims=False):
-    p3d_path = os.path.join(target, "sparse", "points3D.txt")
+    p3d_path = os.path.join(target, "sparse", "0", "points3D.txt")
 
     vertices = PlyData.read(plyfile)['vertex'].data
     with open(p3d_path, 'w') as p3d_file:
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     H = "colmap_" + hashlib.md5(f"{time.time()}".encode()).hexdigest()[:8]
     unique_save = os.path.join(args.save_location, H)
 
-    for dir_ in ["sparse", "images", "depth"]:
+    for dir_ in [os.path.join("sparse","0"), "images", "depth"]:
         os.makedirs(os.path.join(unique_save, dir_), exist_ok=False)
 
     views_data(args.dataset, unique_save, args.start, args.end)
