@@ -75,6 +75,14 @@ def copy_segmented(npz_folder, target=None, start=None, end=None):
         np.save(os.path.join(target, "segmented", f"{fname}.npy"), mask)
     return
 
+def copy_embeds(npz_folder, target=None, start=None, end=None):
+    segmented = sorted(os.listdir(npz_folder))[start:end]
+    for npz in segmented:
+        fname = npz[:-4]
+        npz_path = os.path.join(npz_folder, npz)
+        mask = np.load(npz_path)["arr_0"]
+        np.save(os.path.join(target, "embeddings", f"{fname}.npy"), mask)
+    return
 
 if __name__ == "__main__":
 
@@ -82,6 +90,7 @@ if __name__ == "__main__":
     parser.add_argument("-d", "--dataset", required=True, help="dataset location, contains: depth/; images/; views.json")
     parser.add_argument("-p", "--pointcloud", required=True, help="pointcloud in .ply format")
     parser.add_argument("-m", "--masks", required=False, help="folder of SAM masks per image, [clip_images.py output]/pixel2embed/", default=None)
+    parser.add_argument("-em", "--embeddings", required=False, help="folder of latent embeddings per pixel [latent_videos.py]/")
     parser.add_argument("-s", "--start", type=int, required=False, help="create colmap starting at image N", default=None)
     parser.add_argument("-e", "--end", type=int, required=False, help="create colmap ending at image N (exclusive)", default=None)
     parser.add_argument("-l", "--save_location", required=False, help="location to save colmap", default=os.getcwd())
@@ -101,5 +110,9 @@ if __name__ == "__main__":
     if args.masks:
         os.makedirs(os.path.join(unique_save, "segmented"))
         copy_segmented(args.masks, unique_save, args.start, args.end)
+
+    if args.embeddings:
+        os.makedirs(os.path.join(unique_save, "embeddings"))
+        copy_embeds(args.embeddings, unique_save, args.start, args.end)
 
     print(f"saved to {unique_save}")
