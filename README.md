@@ -2,8 +2,14 @@
 To install the dependencies for gsplat, we created an conda environment: 
 
 ```bash
-conda env create --file gsplat/environment.yml
-conda activate gsplat_env_test
+conda env create --file gsplat/env2.yml
+conda activate two_gsplat
+```
+
+Then, we made a new directory called `third_party` under the directory `/home/scur0703/.conda/envs/two_gsplat/lib/python3.11/site-packages/gsplat/cuda/csrc`, and downloaded `glm` as follows: 
+
+```bash
+!git clone https://github.com/g-truc/glm.git /home/scur0703/.conda/envs/two_gsplat/lib/python3.11/site-packages/gsplat/cuda/csrc/third_party
 ```
 
 Additionally, to install the required fused-ssim library, we executed the following: 
@@ -20,7 +26,7 @@ Once the right directory is found, we used `grep` to find all occurences of `(ma
 ```bash
 grep -nH "np.array(map" ~/.conda/envs/gsplat_env_fixed/lib/python3.11/site-packages/pycolmap/*.py
 ```
-After that, we provided the directory of all occurences of `np.array(map(` as `file_path` in the file `scene_manager_listmap.py` and the directory of all occurences of `append(map(` as `file_path` in the file `scene_manager_map.py`. We then run the following files: 
+After that, we provided the directory of all occurences of `np.array(map(` as `file_path` in the file `scene_manager_listmap.py` and the directory of all occurences of `append(map(` as `file_path` in the file `scene_manager_map.py`. We then run the following files in the following order: 
 ```bash
 python scene_manager_listmap.py
 python scene_manager_map.py
