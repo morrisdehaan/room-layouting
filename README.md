@@ -9,7 +9,7 @@ conda activate two_gsplat
 Then, we made a new directory called `third_party` under the directory `/home/scur0703/.conda/envs/two_gsplat/lib/python3.11/site-packages/gsplat/cuda/csrc`, and downloaded `glm` as follows: 
 
 ```bash
-!git clone https://github.com/g-truc/glm.git /home/scur0703/.conda/envs/two_gsplat/lib/python3.11/site-packages/gsplat/cuda/csrc/third_party
+git clone https://github.com/g-truc/glm.git /home/scur0703/.conda/envs/two_gsplat/lib/python3.11/site-packages/gsplat/cuda/csrc/third_party
 ```
 
 Additionally, to install the required fused-ssim library, we executed the following: 
