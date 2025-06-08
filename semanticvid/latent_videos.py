@@ -2,6 +2,7 @@ import os
 import torch
 import argparse
 import numpy as np
+from tqdm import tqdm
 from ae_training import load_model
 from readers.clip_reader import clipReader
 
@@ -39,10 +40,7 @@ if __name__ == "__main__":
     CR = clipReader(args.data)
     ae_model,_,_,_ = load_model(os.path.join(args.data, "ae_model.pth"))
 
-    for i,emb in enumerate(CR, start=1):
-        if (i==1) or (i%50==0) or (i==len(CR)):
-            print(f"[{i}/{len(CR)} frames] encoding to latent space")
-
+    for emb in tqdm(CR, desc="Encode to latent", unit="frame"):
         latent = latent_frame(emb["embeddings"], ae_model)
         save_frame(emb["frame"], latent, args.save_loc)
     print(f"saved to {args.save_loc}/")

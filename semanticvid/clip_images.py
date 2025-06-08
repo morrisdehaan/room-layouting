@@ -4,6 +4,7 @@ import clip
 import torch
 import argparse
 import numpy as np
+from tqdm import tqdm
 from PIL import Image
 import torch.nn.functional as F
 from scipy.signal import convolve2d
@@ -150,14 +151,10 @@ if __name__ == "__main__":
     SR = samReader(args.instseg)
     clip_model, clip_preprocess = init_CLIP()
 
-    for i, img_file in enumerate(img_files):
-        j = i+1
-        if (j==1) or (j%50==0) or (j==len(img_files)):
-            print(f"[{j}/{len(img_files)} frames] CLIP embeddings")
-
+    for i, img_file in enumerate(tqdm(img_files, desc="CLIP", unit="frame")):
         img_path = os.path.join(args.data, img_file)
         pixel_embeddings(img_path, SR[i], clip_model=clip_model, clip_preprocess=clip_preprocess,
-                         soft_mask=False, save_loc=args.save_loc)
+                         soft_mask=True, save_loc=args.save_loc)
 
     print(f"saved to {args.save_loc}/")
 

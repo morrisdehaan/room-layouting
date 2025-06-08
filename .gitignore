@@ -5,3 +5,4 @@ semanticvid/config/*.pt
 semanticvid/sam2/*
 !semanticvid/sam2/*.md
 semanticvid/results/
+**/__pycache__/

@@ -3,6 +3,7 @@ import json
 import torch
 import argparse
 import numpy as np
+from tqdm import tqdm
 from PIL import Image
 from scipy.signal import convolve2d
 from sam2.build_sam import build_sam2
@@ -81,11 +82,9 @@ if __name__ == "__main__":
     os.makedirs(os.path.join(args.save_loc), exist_ok=False)
 
     img_files = sorted(os.listdir(args.data))[args.start : args.end]
-    for i,img_file in enumerate(img_files, start=1):
-        if (i==1) or (i%50==0) or (i==len(img_files)):
-            print(f"[{i}/{len(img_files)} frames] SAM segmentation")
-
+    for img_file in tqdm(img_files, desc="SAM", unit="frame"):
         generate_masks(img_file, args.data, mask_generator, save_loc)
+
 
     print(f"saved to {save_loc}/")
 

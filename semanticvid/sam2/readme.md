@@ -1,1 +1,1 @@
-clone from [official repository](https://github.com/facebookresearch/sam2)
+clone from [official repository](https://github.com/facebookresearch/sam2). You don't need the enitre repo just `sam2/sam2`.
