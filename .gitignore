@@ -6,3 +6,4 @@ semanticvid/sam2/*
 !semanticvid/sam2/*.md
 semanticvid/results/
 **/__pycache__/
+semanticvid/imgs/
