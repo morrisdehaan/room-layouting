@@ -33,7 +33,7 @@ python scene_manager_map.py
 ```
 
 # Room Layouting
-We reconstruct indoor room layouts from RGBD video data
+We reconstruct indoor room layouts from RGBD video data.
 
 # Data - file structure
 Place the `depth`, `images` directories containing RGBD imagery data and `views.json` containing camera calibrations in the `res` folder.
